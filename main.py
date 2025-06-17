@@ -46,7 +46,7 @@ def get_country_outline(country: str = Query(..., min_length=1)):
         if text.lower() in SKIP_HEADINGS:
             continue  # Skip unwanted sections
         level = int(tag.name[1])  # h1 -> 1, h2 -> 2, ...
-        markdown_lines.append(f"{'#' * level} {text}")
+        markdown_lines.append(f"{'#' * (level+1)} {text}")
 
 
     return "\n\n".join(markdown_lines)
