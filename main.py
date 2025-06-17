@@ -6,6 +6,11 @@ from bs4 import BeautifulSoup
 
 app = FastAPI()
 
+@app.get("/")
+def root():
+    return {"message": "Welcome to the Country Outline API!"}
+
+
 # Enable CORS for any origin
 app.add_middleware(
     CORSMiddleware,
