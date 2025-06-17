@@ -38,11 +38,15 @@ def get_country_outline(country: str = Query(..., min_length=1)):
     # Markdown output
     markdown_lines = ["## Contents", f"# {country.strip()}"]
     
+    # List of section titles to skip
+    SKIP_HEADINGS = {"references", "external links", "see also", "further reading", "notes", "contents"}
+
     for tag in headings:
-        level = int(tag.name[1])  # h1 -> 1, h2 -> 2, ...
         text = tag.get_text().strip()
-        if text.lower() in ["references", "external links", "see also", "further reading", "notes"]:
-            continue  # Skip non-content sections
+        if text.lower() in SKIP_HEADINGS:
+            continue  # Skip unwanted sections
+        level = int(tag.name[1])  # h1 -> 1, h2 -> 2, ...
         markdown_lines.append(f"{'#' * level} {text}")
+
 
     return "\n\n".join(markdown_lines)
